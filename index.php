@@ -1,5 +1,7 @@
+<?php 
 // Startseite
 // Suchleiste, Neue Posts, Link zu Profil/Login/Registrieren
+?>
 
 <!DOCTYPE html>
 <html lang="en">
