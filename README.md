@@ -9,9 +9,9 @@
 - Datenbank (per PHP): [localhost:3306](http://localhost:3306)
 
 ## Zum Projekt beitragen
-Wir brauchen diese Regeln sonst wird es absolut katastrophal
-Die Datenbank und Logs werden nicht synchronisiert
-Die Tabellen der Datenbank werden beim ersten Start erstellt
+- Wir brauchen diese Regeln sonst wird es absolut katastrophal
+- Die Datenbank und Logs werden nicht synchronisiert
+- Die Tabellen der Datenbank werden beim ersten Start erstellt
 
 ### Aufgaben/Issues und Projects
 - Unter dem Reiter von unserem Repo auf Github findet ihr `Projects`
