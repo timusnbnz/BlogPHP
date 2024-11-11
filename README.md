@@ -9,9 +9,12 @@
 - Datenbank (per PHP): [localhost:3306](http://localhost:3306)
 
 ## Zum Projekt beitragen
-- Wir brauchen diese Regeln sonst wird es absolut katastrophal
-- Die Datenbank und Logs werden nicht synchronisiert
+- Bitte haltet euch an die Regeln, sonst wird es eine Katastrophe
+- Die Datenbank und Logs werden nicht in Github hochgeladen
 - Die Tabellen der Datenbank werden beim ersten Start erstellt
+- Bitte nutzt TailwindCSS, damit brauchen wir keine .css Dateien und haben bessere Optik
+- Für TailwindCSS fügt das hier in `<head></head>` auf jeder Seite ein: `<script src="https://cdn.tailwindcss.com"></script>`
+- Fragt ChatGPT wie man es benutzt
 
 ### Aufgaben/Issues und Projects
 - Unter dem Reiter von unserem Repo auf Github findet ihr `Projects`
@@ -21,7 +24,7 @@
 - Steht noch nichts dort, schreibt selbst rein wie ihr euch das vorstellt
 
 ### Programmieren
-- Damit es kein Chaos wird müsst ihr sogenannte Branches erstellen
+- Damit es kein Chaos gibt, MÜSST ihr sogenannte Branches erstellen
 - In VSCode unten links steht `main`, das ist der Haupt-Branch
 - UNTER KEINEN UMSTÄNDEN SACHEN IN MAIN ÄNDERN
 - Wenn ihr eine Aufgabe beginnt, bspw. Suchleiste, klickt unten auf den Branch, bspw. `Main`
