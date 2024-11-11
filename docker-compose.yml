@@ -1,0 +1,60 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: blog-nginx
+    restart: always
+    platform: linux/amd64
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./html:/var/www/html
+    ports:
+      - "80:80"
+    networks:
+      - internal
+
+  php:
+    image: php:fpm-alpine
+    container_name: blog-php
+    restart: always
+    platform: linux/amd64
+    volumes:
+      - ./html/:/var/www/html/
+      - ./logs/php.log:/var/log/fpm-php.www.log
+    networks:
+      - internal
+
+  db:
+    image: mysql:5.7
+    container_name: blog-mysql
+    restart: always
+    platform: linux/amd64
+    volumes:
+      - ./db:/var/lib/mysql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    ports:
+      - "3306:3306"
+    networks:
+      - internal
+    environment:
+      MYSQL_ROOT_PASSWORD: fortniteballs
+      MYSQL_DATABASE: blogdb
+      MYSQL_PASSWORD: meinblogistsuper
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: blog-phpmyadmin
+    restart: always
+    platform: linux/amd64
+    depends_on:
+      - db
+    ports:
+      - "8090:80"
+    networks:
+      - internal
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: fortniteballs
+
+networks:
+  internal:
+    driver: bridge
