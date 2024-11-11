@@ -13,7 +13,7 @@ services:
       - internal
 
   php:
-    image: php:fpm-alpine
+    build: .
     container_name: blog-php
     restart: always
     platform: linux/amd64
