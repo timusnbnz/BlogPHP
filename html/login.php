@@ -1,31 +1,27 @@
 <?php
-//Session starten und Zugangsdaten laden
 session_start();
 require_once 'config.php';
-//Wenn bereits eingeloggt zurück zur Startseite
 if (isset($_SESSION['userid'])) {
     header("Location: index.php");
 }
-//Wenn das Formular an sich selbst gesendet hat
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    //Eingaben holen
     $user_email = trim($_POST['email']);
     $user_password = trim($_POST['password']);
-    //Datenbankverbindung aufbauen
+
     try {
         $pdo = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {     //Verbindung kaputt :(
         die("Verbindung fehlgeschlagen: " . $e->getMessage());
     }
-    //Datenbankabfrage -> Prüfen ob E-Mail vorhanden
+
     $sql = "SELECT id, username, email, password FROM users WHERE email = :email LIMIT 1";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':email', $user_email);
     $stmt->execute();
     if ($stmt->rowCount() > 0) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        //Prüfen ob Passwort übereinstimmt (mit hash)
         if (password_verify($user_password, $user['password'])) {
             $_SESSION['userid'] = $user['id'];
             $_SESSION['username'] = $user['username'];
@@ -68,11 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </button>
             </div>
             <?php
-            if (!empty($error)) {
-                echo '<div class="bg-red-500 text-white font-semibold py-2 px-4 my-4 rounded-md shadow-md">';
-                echo htmlspecialchars($error); // Fehler in der Fehlermeldung sicher ausgeben
-                echo '</div>';
-            }
+            if (!empty($error)) echo '<div class="bg-red-500 text-white font-semibold py-2 px-4 my-4 rounded-md shadow-md">' . htmlspecialchars($error) . '</div>';
             ?>
             <div class="text-center">
                 <a href="register.php" class="text-indigo-600 hover:text-indigo-700 text-sm">Noch kein Konto?</a>

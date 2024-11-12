@@ -1,56 +1,54 @@
 <?php
-//Session starten und Zugangsdaten laden
 session_start();
 require_once 'config.php';
-//Wenn bereits eingeloggt zurück zur Startseite
 if (isset($_SESSION['userid'])) {
     header("Location: index.php");
 }
-//Wenn das Formular an sich selbst gesendet hat
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    //Eingaben aus der Post Methode holen
+
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-    //Eingaben prüfen
+
     if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
         $error = "Bitte alle Felder ausfüllen.";
     }
     if ($password !== $confirm_password) {
         $error = "Passwörter stimmen nicht überein.";
     }
-    //Eingaben geprüft und korrekt
+
     if (empty($error)) {
         try {
             $pdo = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {     //Verbindung kaputt :(
+        } catch (PDOException $e) {
             $error = "Verbindung fehlgeschlagen: " . $e->getMessage();
         }
-        //Prüfen ob Nutzername bereits vorhanden ist
+
         $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
         $stmt->execute(['username' => $username]);
         if ($stmt->rowCount() > 0) {
             $error = "Nutzername bereits verwendet.";
         }
-        //Prüfen ob E-Mail bereits vorhanden ist
+
         $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->execute(['email' => $email]);
         if ($stmt->rowCount() > 0) {
             $error = "E-Mail bereits verwendet.";
         }
-        //Wenn alles passt dann weiter
+       
         if (empty($error)) {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
             if ($stmt->execute(['username' => $username, 'email' => $email, 'password' => $hashed_password])) {
                 $info = "Registrierung erfolgreich!";
-                //ID aus Datenbank holen
+
                 $sql = "SELECT id FROM users WHERE email = :email LIMIT 1";
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':email', $user_email);
                 $stmt->execute();
+
                 if ($stmt->rowCount() > 0) {
                     $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     $_SESSION['userid'] = $user['id'];
@@ -64,8 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-
-<!DOCTYPE html>
 <html lang="de">
 
 <head>
@@ -110,9 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <a href="login.php" class="text-indigo-600 hover:text-indigo-700 text-sm">Bereits ein Konto?</a>
             </div>
         </form>
-
     </div>
-
 </body>
 
 </html>
