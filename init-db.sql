@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
     -- Passwort (verschlüsselt)
     role_id INT DEFAULT 3,
     -- Standardrolle (z.B. "User" mit ID 3)
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Tabelle für Rollen
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS posts (
     -- Inhalt des Posts
     theme_id INT NOT NULL,
     -- Zugehöriges Thema (Verknüpfung zur Themes-Tabelle)
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     -- Erstellungsdatum des Posts
 );
 
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS comments (
     -- Verfasser des Kommentars (Verknüpfung zur Users-Tabelle)
     content TEXT NOT NULL,
     -- Inhalt des Kommentars
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     -- Erstellungsdatum des Kommentars
 );
 
