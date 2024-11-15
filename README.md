@@ -5,9 +5,9 @@
 - Bitte zuerst Docker Desktop (Siehe Installation) installieren
 - Die Docker-compose.yml startet Webserver, PHP, Datenbank & PHPMyAdmin
 - Dazu `docker-compose up --build` ausführen
-- Webserver: [localhost:80](http://localhost:80)
-- PhpMyAdmin: [localhost:8090](http://localhost:8090)
-- Datenbank (per PHP): [localhost:3306](http://localhost:3306)
+- [localhost:80](http://localhost:80) Webserver
+- [localhost:8090](http://localhost:8090) PhpMyAdmin
+- [localhost:3306](http://localhost:3306) Datenbank (per PHP)
 
 ## Wie ihr zum Projekt beitragt
 
