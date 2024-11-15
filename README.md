@@ -53,9 +53,9 @@ Ihr benötigt folgende Programme für MacOS:
 
 Ihr benötigt folgende Programme für Windows:
 
-- Git [Download](https://git-scm.com/downloads/win)
-- Visual Studio Code [Download](https://code.visualstudio.com/download)
-- Docker Desktop [Download](https://www.docker.com/products/docker-desktop/)
+- [Download](https://git-scm.com/downloads/win) Git 
+- [Download](https://code.visualstudio.com/download) Visual Studio Code 
+- [Download](https://www.docker.com/products/docker-desktop/) Docker Desktop 
 
 ### Installation prüfen
 
