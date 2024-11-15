@@ -7,7 +7,7 @@
 - Dazu `docker-compose up --build` ausführen
 - [localhost:80](http://localhost:80) Webserver
 - [localhost:8090](http://localhost:8090) PhpMyAdmin
-- [localhost:3306](http://localhost:3306) Datenbank (per PHP)
+- [localhost:3306](http://localhost:3306) Datenbank (per PHP) Passwort: `fortniteballs`
 
 ## Wie ihr zum Projekt beitragt
 
