@@ -42,12 +42,7 @@
 
 ### Installation der Programme auf MacOS
 
-Ihr benötigt folgende Programme für MacOS:
-
-- Brew: Im Terminal eingeben: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-- Git: Im Terminal eingeben: `brew install git`
-- Docker: Im Terminal eingeben: `brew install docker`
-- Visual Studio Code: [Download](https://code.visualstudio.com/download)
+Ihr könnnt alle Programme mit einem Command installieren: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && brew install git && brew install --cask docker && brew install --cask visual-studio-code`
 
 ### Installation der Programme auf Windows
 
