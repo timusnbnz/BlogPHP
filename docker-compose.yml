@@ -24,7 +24,7 @@ services:
       - internal
 
   db:
-    image: mysql:5.7
+    image: mysql:latest
     container_name: blog-mysql
     restart: always
     platform: linux/amd64
