@@ -41,7 +41,7 @@ services:
       MYSQL_PASSWORD: meinblogistsuper
 
   phpmyadmin:
-    image: phpmyadmin
+    image: phpmyadmin:latest
     container_name: blog-phpmyadmin
     restart: always
     platform: linux/amd64
