@@ -1,25 +1,26 @@
 <?php
-// Startseite
-// Suchleiste, Neue Posts, Link zu Profil/Login/Registrieren
+session_start();
 ?>
-
-<!DOCTYPE html>
 <html lang="de">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible"
-        content="IE=edge">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Document</title>
+    <title>Startseite</title>
 </head>
 
 <body>
     <?php
     require_once 'suchleiste.php';
     ?>
+    <ul>
+        <li><a href="account.php">Account</a></li>
+        <li><a href="login.php">Login</a></li>
+        <li><a href="logout.php">Logout</a></li>
+        <li><a href="postviewer.php">Postviewer</a></li>
+        <li><a href="register.php">Register</a></li>
+    </ul>
 </body>
 
 </html>

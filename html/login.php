@@ -4,17 +4,9 @@ require_once 'config.php';
 if (isset($_SESSION['userid'])) {
     header("Location: index.php");
 }
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_email = trim($_POST['email']);
     $user_password = trim($_POST['password']);
-
-    try {
-        $pdo = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {     //Verbindung kaputt :(
-        die("Verbindung fehlgeschlagen: " . $e->getMessage());
-    }
 
     $sql = "SELECT id, username, email, password FROM users WHERE email = :email LIMIT 1";
     $stmt = $pdo->prepare($sql);
@@ -35,22 +27,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-
-<!DOCTYPE html>
 <html lang="de">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Formular</title>
+    <title>Einloggen</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="min-h-full bg-gray-100 ">
     <?php
     require_once 'suchleiste.php';
     ?>
-    <div class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div class="flex justify-center items-center m-8">
         <div class="bg-white p-8 rounded-lg shadow-lg w-96">
             <h2 class="text-2xl font-semibold text-center text-gray-700 mb-6">Login</h2>
             <form action="" method="POST">

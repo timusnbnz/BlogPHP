@@ -1,64 +1,49 @@
 <?php
 session_start();
 require_once 'config.php';
-
 if (isset($_SESSION['userid'])) {
     header("Location: index.php");
+    exit();
 }
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-
     if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
         $error = "Bitte alle Felder ausfüllen.";
     }
     if ($password !== $confirm_password) {
         $error = "Passwörter stimmen nicht überein.";
     }
-
     if (empty($error)) {
         try {
-            $pdo = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
+            $stmt->execute(['username' => $username]);
+            if ($stmt->rowCount() > 0) {
+                $error = "Nutzername bereits verwendet.";
+            }
+
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
+            $stmt->execute(['email' => $email]);
+            if ($stmt->rowCount() > 0) {
+                $error = "E-Mail bereits verwendet.";
+            }
+
+            if (empty($error)) {
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+                $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+                $stmt->execute(['username' => $username, 'email' => $email, 'password' => $hashed_password]);
+
+                $userid = $pdo->lastInsertId();
+                $_SESSION['userid'] = $userid;
+                header("Location: index.php");
+            }
         } catch (PDOException $e) {
             $error = "Verbindung fehlgeschlagen: " . $e->getMessage();
-        }
-
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
-        $stmt->execute(['username' => $username]);
-        if ($stmt->rowCount() > 0) {
-            $error = "Nutzername bereits verwendet.";
-        }
-
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
-        $stmt->execute(['email' => $email]);
-        if ($stmt->rowCount() > 0) {
-            $error = "E-Mail bereits verwendet.";
-        }
-
-        if (empty($error)) {
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
-            if ($stmt->execute(['username' => $username, 'email' => $email, 'password' => $hashed_password])) {
-                $info = "Registrierung erfolgreich!";
-
-                $sql = "SELECT id FROM users WHERE email = :email LIMIT 1";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':email', $user_email);
-                $stmt->execute();
-
-                if ($stmt->rowCount() > 0) {
-                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $_SESSION['userid'] = $user['id'];
-                    $_SESSION['username'] = $username;
-                    $_SESSION['email'] = $email;
-                }
-            } else {
-                $error = "Fehler bei der Registrierung.";
-            }
         }
     }
 }
@@ -72,11 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="min-h-full bg-gray-100 ">
     <?php
     require_once 'suchleiste.php';
     ?>
-    <div class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div class="flex justify-center items-center m-8">
         <div class="bg-white p-8 rounded-lg shadow-lg w-96">
             <h2 class="text-2xl font-semibold text-center text-gray-700 mb-6">Registrieren</h2>
             <form action="" method="POST">
@@ -113,5 +98,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </form>
         </div>
     </div>
+</body>
 
 </html>
