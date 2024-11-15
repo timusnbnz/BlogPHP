@@ -47,17 +47,18 @@ Ihr benötigt folgende Programme für MacOS:
 - Brew: Im Terminal eingeben: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 - Git: Im Terminal eingeben: `brew install git`
 - Docker: Im Terminal eingeben: `brew install docker`
-- Visual Studio Code: [Download](https://code.visualstudio.com/download) 
+- Visual Studio Code: [Download](https://code.visualstudio.com/download)
 
 ### Installation der Programme auf Windows
 
 Ihr benötigt folgende Programme für Windows:
 
 - Git [Download](https://git-scm.com/downloads/win)
-- Visual Studio Code [Download](https://code.visualstudio.com/download) 
+- Visual Studio Code [Download](https://code.visualstudio.com/download)
 - Docker Desktop [Download](https://www.docker.com/products/docker-desktop/)
 
 ### Installation prüfen
+
 Nach dem herunterladen und installieren prüft bitte folgendes:
 
 - Im Terminal `git --version` eingeben
@@ -65,6 +66,7 @@ Nach dem herunterladen und installieren prüft bitte folgendes:
 - Gibt es einen Fehler? Google oder ChatGPT
 
 ### Einrichtung Git
+
 Nun müssen wir Git einrichten:
 
 - Im Terminal `git config --global user.name "Your Name"` eingeben, setzt in die Anführungszeichen euren Namen ein (Vollständiger Name)
