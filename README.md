@@ -48,9 +48,9 @@ Ihr könnnt alle Programme mit einem Command installieren: `/bin/bash -c "$(curl
 
 Ihr benötigt folgende Programme für Windows:
 
-- [Download](https://git-scm.com/downloads/win) Git 
-- [Download](https://code.visualstudio.com/download) Visual Studio Code 
-- [Download](https://www.docker.com/products/docker-desktop/) Docker Desktop 
+- [Download](https://git-scm.com/downloads/win) Git
+- [Download](https://code.visualstudio.com/download) Visual Studio Code
+- [Download](https://www.docker.com/products/docker-desktop/) Docker Desktop
 
 ### Installation prüfen
 
