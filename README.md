@@ -78,7 +78,7 @@ Nun müssen wir Git einrichten:
 - Öffnet den Ordner ins VSCode
 - Klickt auf Terminal oben in der Menüleiste
 - Nun solltet ihr in dem erstellen Ordner sein
-- Gebt nun `git clone https://github.com/timusnbnz/BlogPHP.git` ein
+- Gebt nun `git clone https://github.com/timusnbnz/php-blog.git` ein
 - Nun sollte ein `BlogPHP` Ordner erstellt sein
 
 ### Installation der Docker Container
