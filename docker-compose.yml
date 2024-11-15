@@ -24,7 +24,7 @@ services:
       - internal
 
   db:
-    image: mysql:5.7
+    image: mysql:latest
     container_name: blog-mysql
     restart: always
     platform: linux/amd64
@@ -41,7 +41,7 @@ services:
       MYSQL_PASSWORD: meinblogistsuper
 
   phpmyadmin:
-    image: phpmyadmin
+    image: phpmyadmin:latest
     container_name: blog-phpmyadmin
     restart: always
     platform: linux/amd64
