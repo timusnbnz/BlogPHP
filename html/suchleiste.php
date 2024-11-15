@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -12,17 +12,10 @@
 <nav class="bg-white border-b border-gray-200 shadow-sm">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
         <!-- Titel links -->
-        <a href="index.php" class="text-2xl font-bold text-blue-600">MeineWebsite</a>
+        <a href="index.php" class="text-2xl font-bold text-blue-600">MyBlog</a>
 
         <!-- Menü-Links in der Mitte -->
-        <div id="menu" class="hidden md:flex space-x-6">
-            <a href="index.php" class="text-gray-700 hover:text-blue-600">Home</a>
-            <a href="about.php" class="text-gray-700 hover:text-blue-600">Über uns</a>
-            <a href="services.php" class="text-gray-700 hover:text-blue-600">Dienstleistungen</a>
-        </div>
-
-        <!-- Suchleiste rechts -->
-        <div class="hidden md:flex items-center">
+        <div id="menu" class="hidden md:flex items-center">
             <form action="search.php" method="GET" class="relative">
                 <input 
                     type="text" 
@@ -38,6 +31,13 @@
             </form>
         </div>
 
+        <!-- Suchleiste rechts -->
+        <div class="hidden md:flex space-x-6">
+            <a href="about.php" class="text-gray-700 hover:text-blue-600">Themen</a>
+            <a href="services.php" class="text-gray-700 hover:text-blue-600">Profil</a>
+           
+        </div>
+
         <!-- Hamburger Button für mobile Geräte -->
         <button id="menu-btn" class="block md:hidden text-gray-700 focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -48,9 +48,9 @@
 
     <!-- Mobiles Menü -->
     <div id="mobile-menu" class="md:hidden px-4 py-4 hidden">
-        <a href="index.php" class="block py-2 text-gray-700 hover:text-blue-600">Home</a>
-        <a href="about.php" class="block py-2 text-gray-700 hover:text-blue-600">Über uns</a>
-        <a href="services.php" class="block py-2 text-gray-700 hover:text-blue-600">Dienstleistungen</a>
+        <a href="about.php" class="block py-2 text-gray-700 hover:text-blue-600">Themen</a>
+        <a href="index.php" class="block py-2 text-gray-700 hover:text-blue-600">Profil</a>
+        
         <!-- Suchleiste für mobile Geräte -->
         <form action="search.php" method="GET" class="mt-4">
             <input 
