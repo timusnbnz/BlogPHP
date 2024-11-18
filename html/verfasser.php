@@ -13,23 +13,14 @@ require_once('suchleiste.php');
     <div class="bg-gray-100 text-gray-800 font-sans">
     <div class="container mx-auto p-6">
         <h1 class="text-4xl font-bold text-center text-blue-600 mb-8">Beiträge des Nutzers</h1>
-
         <?php
         // Datenbankverbindung herstellen
         require_once('config.php');
-        try {
-            $pdo = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            echo "<div class='text-red-500 text-center bg-red-100 p-4 rounded mb-4'>Verbindung fehlgeschlagen: " . htmlspecialchars($e->getMessage()) . "</div>";
-            die();
-        }
 
         // Nutzer-ID (z. B. aus GET-Parametern)
         $user_id = filter_input(INPUT_GET, 'user_id', FILTER_VALIDATE_INT);
         if (!$user_id) {
-            echo "<div class='text-yellow-500 text-center bg-yellow-100 p-4 rounded'>Ungültige Nutzer-ID.</div>";
-            exit;
+            $error = "Ungültige Nutzer-ID";
         }
 
         // Beiträge abrufen
@@ -42,6 +33,7 @@ require_once('suchleiste.php');
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
         $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
         // Beiträge anzeigen
         if (count($posts) > 0) {
@@ -56,6 +48,11 @@ require_once('suchleiste.php');
             echo "<div class='text-gray-500 text-center bg-gray-200 p-4 rounded'>Keine Beiträge von diesem Nutzer gefunden.</div>";
         }
         ?>
+        <?php if (!empty($error)) : ?>
+                <div class="bg-red-500 text-white font-semibold py-2 px-4 my-4 rounded-md shadow-md">
+                    <?= htmlspecialchars($error) ?>
+                </div>
+            <?php endif; ?>
     </div>
     </div>
 </body>
