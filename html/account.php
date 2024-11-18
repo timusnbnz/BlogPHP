@@ -112,6 +112,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="password" name="new_password" placeholder="Neues Passwort" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" />
                 <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg">Speichern</button>
             </form>
+            <a href="logout.php">
+                <button type="button" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg">
+                    Abmelden
+                </button>
+            </a>
         </div>
     </div>
 
