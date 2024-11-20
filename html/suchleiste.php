@@ -12,7 +12,7 @@
             <div class="container mx-auto px-4 py-4 flex justify-between items-center">
                 <a href="index.php" class="text-2xl font-bold text-blue-600">MyBlog</a>
                 <div id="menu" class="hidden md:flex items-center">
-                    <form action="search.php" method="GET" class="relative">
+                    <form action="suchfunktion.php" method="GET" class="relative">
                         <input type="text" name="query" placeholder="Suche..."
                             class="bg-gray-100 border border-gray-300 rounded-full py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         <button type="submit" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
@@ -25,7 +25,7 @@
                     </form>
                 </div>
                 <div class="hidden md:flex space-x-6">
-                    <a href="themen.php" class="text-gray-700 hover:text-blue-600">Themen</a>
+                    <a href="about.php" class="text-gray-700 hover:text-blue-600">Themen</a>
                     <?php
                     if (isset($_SESSION['userid'])) {
                         echo ('<a href="account.php" class="text-gray-700 hover:text-blue-600">Account</a>');
@@ -42,7 +42,7 @@
                 </button>
             </div>
             <div id="mobile-menu" class="md:hidden px-4 py-4 hidden">
-                <a href="themen.php" class="block py-2 text-gray-700 hover:text-blue-600">Themen</a>
+                <a href="about.php" class="block py-2 text-gray-700 hover:text-blue-600">Themen</a>
                 <?php
                 if (isset($_SESSION['userid'])) {
                     echo ('<a href="account.php" class="block py-2 text-gray-700 hover:text-blue-600">Account</a>');
@@ -50,7 +50,7 @@
                     echo ('<a href="login.php" class="block py-2 text-gray-700 hover:text-blue-600">Anmelden</a>');
                 }
                 ?>
-                <form action="search.php" method="GET" class="mt-4">
+                <form action="suchfunktion.php" method="GET" class="mt-4">
                     <input type="text" name="query" placeholder="Suche..."
                         class="w-full bg-gray-100 border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </form>
