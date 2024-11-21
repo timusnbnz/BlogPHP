@@ -7,9 +7,7 @@ if (isset($_SESSION['userid'])) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_email = trim($_POST['email']);
     $user_password = trim($_POST['password']);
-
-    $sql = "SELECT id, username, email, password FROM users WHERE email = :email LIMIT 1";
-    $stmt = $pdo->prepare($sql);
+    $stmt = $pdo->prepare("SELECT id, username, email, password FROM users WHERE email = :email LIMIT 1");
     $stmt->bindParam(':email', $user_email);
     $stmt->execute();
     if ($stmt->rowCount() > 0) {
@@ -34,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Einloggen</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 
 <body class="min-h-full bg-gray-100 ">

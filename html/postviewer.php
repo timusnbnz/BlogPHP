@@ -1,16 +1,12 @@
-<?php
-session_start();
-?>
-<!DOCTYPE html>
+<?php session_start(); ?>
 <html lang="de">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog-Artikel ansehen</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
-
 <body class="min-h-full bg-gray-100">
     <?php
     require_once 'suchleiste.php';
@@ -24,27 +20,24 @@ session_start();
 
                 if ($postId > 0) {
                     try {
-                        // SQL-Abfrage, um den Artikel zu holen
-                        $stmt = $pdo->prepare("
-                    SELECT 
-                        id, 
-                        title, 
-                        content, 
-                        created_at 
-                    FROM posts 
-                    WHERE id = :id
-                ");
+                        $stmt = $pdo->prepare("SELECT id, title, content, created_at, views FROM posts WHERE id = :id");
                         $stmt->bindParam(':id', $postId, PDO::PARAM_INT);
                         $stmt->execute();
 
-                        // Artikel abrufen
                         $post = $stmt->fetch(PDO::FETCH_ASSOC);
 
                         if ($post) {
-                            // Artikel anzeigen
+                            $newViewsCount = $post['views'] + 1;
+
+                            $updateStmt = $pdo->prepare("UPDATE posts SET views = :views WHERE id = :id");
+                            $updateStmt->bindParam(':views', $newViewsCount, PDO::PARAM_INT);
+                            $updateStmt->bindParam(':id', $postId, PDO::PARAM_INT);
+                            $updateStmt->execute();
+
                             echo "<h1 class='text-3xl font-bold text-gray-800 mb-4'>" . htmlspecialchars($post['title']) . "</h1>";
                             echo "<p class='text-sm text-gray-500 mb-6'>Erstellt am " . htmlspecialchars($post['created_at']) . "</p>";
                             echo "<div class='prose max-w-none'>" . nl2br(htmlspecialchars($post['content'])) . "</div>";
+                            echo "<p class='text-sm text-gray-500 mt-4'>Views: " . $newViewsCount . "</p>";
                         } else {
                             echo "<p class='text-red-500'>Artikel nicht gefunden.</p>";
                         }
@@ -58,7 +51,5 @@ session_start();
             </div>
         </div>
     </div>
-
 </body>
-
 </html>
