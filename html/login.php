@@ -1,21 +1,26 @@
-<?php
+<?php //Session und Datenbank laden
 session_start();
 require_once 'config.php';
+//Leute rausschmeißen die per URL drinnen sind aber bereits angemeldet
 if (isset($_SESSION['userid'])) {
     header("Location: index.php");
 }
+//Wenn über Form was rein kommt
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_email = trim($_POST['email']);
     $user_password = trim($_POST['password']);
-    $stmt = $pdo->prepare("SELECT id, username, email, password FROM users WHERE email = :email LIMIT 1");
+    //Datenbankabfrage
+    $stmt = $pdo->prepare("SELECT id, username, email, role, password FROM users WHERE email = :email LIMIT 1");
     $stmt->bindParam(':email', $user_email);
     $stmt->execute();
+    //Kam überhaupt was zurück?
     if ($stmt->rowCount() > 0) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if (password_verify($user_password, $user['password'])) {
             $_SESSION['userid'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
+            $_SESSION['role'] = $user['role'];
             header("Location: index.php");
         } else {
             $error = "Falsches Passwort.";

@@ -1,21 +1,28 @@
-<?php
+<?php //Das übliche zeug laden
 session_start();
 require_once 'config.php';
+//Leute raus schmeißen die bereits angemeldet sind
 if (isset($_SESSION['userid'])) {
     header("Location: index.php");
     exit();
 }
-
+//Wenn über Form was rein kommt nh
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
+    //Digga füll erst mal alles aus bevor du abschickst
     if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
         $error = "Bitte alle Felder ausfüllen.";
     }
+    //Bro bitte zwei mal das gleiche Passwort eingeben
     if ($password !== $confirm_password) {
         $error = "Passwörter stimmen nicht überein.";
+    }
+    //Alter wir wollen ein Passwort kein Passwitz
+    if (strlen($password) < 8) {
+        $error = "Das Passwort muss mind. 8 Zeichen haben";
     }
     if (empty($error)) {
         try {
@@ -34,12 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if (empty($error)) {
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, :role)");
+                $stmt->execute(['username' => $username, 'email' => $email, 'password' => $hashed_password, 'role' => 'user']);
 
-                $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
-                $stmt->execute(['username' => $username, 'email' => $email, 'password' => $hashed_password]);
+                $_SESSION['userid'] = $pdo->lastInsertId();
+                $_SESSION['username'] = $username;
+                $_SESSION['email'] = $email;
+                $_SESSION['role'] = 'user';
 
-                $userid = $pdo->lastInsertId();
-                $_SESSION['userid'] = $userid;
                 header("Location: index.php");
             }
         } catch (PDOException $e) {

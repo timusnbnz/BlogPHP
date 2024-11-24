@@ -1,5 +1,16 @@
 # BlogPHP
 
+## Für Herr Müller
+
+- `docker-compose up --build` ausführen
+- Dann kann auf [localhost:80](http://localhost:80) zugegriffen werden
+- Die Datenbank etc. sind leer, daher einmal registrieren
+- Nach dem Konto erstellen muss dieses einmalig mit Rechten versehen werden
+- Dazu in PhpMyAdmin [localhost:8090](http://localhost:8090) unter blogDB/users/role den Wert auf `admin` setzen
+- Jetzt können Posts mit diesem Adminkonto erstellt, bearbeitet und gelöscht werden
+- Jedes Konto kann Kommentieren, E-Mail, Passwort und Nutzername ändern
+- Suche, Posts & Kommentare ansehen funktioniert auch ohne Konto
+
 ## Zugriff auf den Blog
 
 - Bitte zuerst Docker Desktop (Siehe Installation) installieren

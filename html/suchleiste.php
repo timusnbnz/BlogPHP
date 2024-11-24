@@ -22,6 +22,11 @@
                 } else {
                     echo ('<a href="login.php" class="text-gray-700 hover:text-blue-600">Anmelden</a>');
                 }
+                if (isset($_SESSION['userid'])) {
+                    if ($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'mod') {
+                        echo ('<a href="posteditor.php" class="text-gray-700 hover:text-blue-600">Neuer Post</a>');
+                    }
+                }
                 ?>
             </div>
             <button id="menu-btn" class="block md:hidden text-gray-700 focus:outline-none">
@@ -37,6 +42,11 @@
                 echo ('<a href="account.php" class="block py-2 text-gray-700 hover:text-blue-600">Account</a>');
             } else {
                 echo ('<a href="login.php" class="block py-2 text-gray-700 hover:text-blue-600">Anmelden</a>');
+            }
+            if (isset($_SESSION['userid'])) {
+                if ($_SESSION['role'] == 'admin' || $_SESSION['role'] == 'mod') {
+                    echo ('<a href="account.php" class="block py-2 text-gray-700 hover:text-blue-600">Post erstellen</a>');
+                }
             }
             ?>
             <form action="searchresults.php" method="GET" class="mt-4">

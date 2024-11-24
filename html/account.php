@@ -1,42 +1,52 @@
-<?php
+<?php //Session und Datenbank laden
 session_start();
 require_once 'config.php';
+//Nicht angemeldet?
 if (!isset($_SESSION['userid'])) {
     header("Location: index.php");
     exit;
 }
-
+//UserID auslesen, Datenbank fragen wer des is
 $userid = $_SESSION['userid'];
 $query = $pdo->prepare("SELECT username, email FROM users WHERE id = ?");
 $query->execute([$userid]);
 $user = $query->fetch();
-
+//Wenn Seite durch Formular aufgerufen wurde (also bei einer Aktion)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //Neue Daten mit alten Kombinieren
     $username = $_POST['username'] ?? $user['username'];
     $email = $_POST['email'] ?? $user['email'];
     $new_password = $_POST['new_password'] ?? null;
-
+    //Prüfen ob Username existiert
     $checkUsername = $pdo->prepare("SELECT id FROM users WHERE username = ? AND id != ?");
     $checkUsername->execute([$username, $userid]);
     $usernameExists = $checkUsername->fetch();
-
+    //Prüfen ob E-Mail existiert
+    $checkEmail = $pdo->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
+    $checkEmail->execute([$username, $email]);
+    $emailExists = $checkUsername->fetch();
+    //Fehler ausgeben falls was is
     if ($usernameExists) {
         $error = "Der Benutzername wird bereits verwendet.";
-    } else {
-        if (!empty($new_password)) {
-            if (strlen($new_password) < 6) {
-                $error = "Das Passwort muss mindestens 6 Zeichen lang sein.";
-            } else {
-                $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
-                $update_password = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
-                $update_password->execute([$password_hash, $userid]);
-            }
+    }
+    if ($emailExists) {
+        $error = "Der Benutzername wird bereits verwendet.";
+    }
+    //Passwort ändern
+    if (!empty($new_password)) {
+        if (strlen($new_password) < 8) {
+            $error = "Das Passwort muss mindestens 8 Zeichen lang sein.";
+        } else {
+            $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+            $update_password = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
+            $update_password->execute([$password_hash, $userid]);
         }
-        if (empty($error)) {
-            $update = $pdo->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
-            $update->execute([$username, $email, $userid]);
-            $info = "Einstellungen wurden erfolgreich aktualisiert.";
-        }
+    }
+    //Keine Fehler bisher? Datenbank aktualisieren
+    if (empty($error)) {
+        $update = $pdo->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
+        $update->execute([$username, $email, $userid]);
+        $info = "Einstellungen wurden erfolgreich aktualisiert.";
     }
 }
 ?>
@@ -57,20 +67,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="flex items-center justify-center p-6">
         <div class="max-w-lg w-full bg-white rounded-lg shadow-lg p-8">
             <h2 class="text-2xl font-bold text-gray-800 mb-8">Kontoeinstellungen</h2>
-
             <?php if (!empty($error)) : ?>
                 <div class="bg-red-500 text-white font-semibold py-2 px-4 my-4 rounded-md shadow-md">
                     <?= htmlspecialchars($error) ?>
                 </div>
             <?php endif; ?>
-
             <?php if (!empty($info)) : ?>
                 <div class="bg-green-600 text-white font-semibold py-2 px-4 my-4 rounded-md shadow-md">
                     <?= htmlspecialchars($info) ?>
                 </div>
             <?php endif; ?>
-
-            <!-- Benutzername -->
             <div class="flex items-center justify-between mb-6">
                 <div>
                     <h3 class="text-gray-700 font-medium">Benutzername</h3>
@@ -84,8 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" name="username" value="<?= htmlspecialchars($user['username']) ?>" placeholder="Neuer Benutzername" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" />
                 <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg">Speichern</button>
             </form>
-
-            <!-- E-Mail -->
             <div class="flex items-center justify-between mb-6">
                 <div>
                     <h3 class="text-gray-700 font-medium">E-Mail</h3>
@@ -99,8 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" placeholder="Neue E-Mail" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" />
                 <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg">Speichern</button>
             </form>
-
-            <!-- Passwort -->
             <div class="flex items-center justify-between mb-6">
                 <div>
                     <h3 class="text-gray-700 font-medium">Passwort</h3>
@@ -120,7 +122,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </a>
         </div>
     </div>
-
     <script>
         function toggleField(field) {
             const form = document.getElementById(`${field}-form`);
@@ -128,6 +129,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </script>
 </body>
-
 
 </html>
