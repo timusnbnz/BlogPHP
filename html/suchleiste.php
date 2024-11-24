@@ -16,7 +16,6 @@
                 </form>
             </div>
             <div class="hidden md:flex space-x-6">
-                <a href="themes.php" class="text-gray-700 hover:text-blue-600">Themen</a>
                 <?php
                 if (isset($_SESSION['userid'])) {
                     echo ('<a href="account.php" class="text-gray-700 hover:text-blue-600">Account</a>');
@@ -33,7 +32,6 @@
             </button>
         </div>
         <div id="mobile-menu" class="md:hidden px-4 py-4 hidden">
-            <a href="about.php" class="block py-2 text-gray-700 hover:text-blue-600">Themen</a>
             <?php
             if (isset($_SESSION['userid'])) {
                 echo ('<a href="account.php" class="block py-2 text-gray-700 hover:text-blue-600">Account</a>');
